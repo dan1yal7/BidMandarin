@@ -37,4 +37,8 @@ app.MapControllerRoute(
     name: "mandarin",
     pattern: "{controller=Mandarin}/{action=Index}/{id}");
 
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller = Bid}/{action=Index}/{id}");
+
 app.Run();
