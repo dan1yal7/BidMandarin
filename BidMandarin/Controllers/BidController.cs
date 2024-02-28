@@ -11,29 +11,25 @@ namespace BidMandarin.Controllers
         public BidController(ApplicationDbContext context)
         {
             _context = context;
-        } 
+        }
 
-        public IActionResult PlaceBid(  int bidId, int mandarinId,int userId, decimal amount, DateTime bidTime)
+        [HttpPost]
+        public IActionResult PlaceBid(Bid bid)
         {
-            var bid = new Bid
-            {   
-                BidId = bidId,
-                MandarinId = mandarinId,
-                UserId = userId,
-                Amount = amount,  
-                BidTime = bidTime
 
+            if (ModelState.IsValid)
+            {
 
-            };
+                _context.Bids.Add(bid);
+                _context.SaveChanges();
 
-            _context.Bids.Add(bid);
-            _context.SaveChanges();
-
-            // Перенаправление пользователя на другую страницу или представление
-            return RedirectToAction("Index", "Mandarin");
+                // Перенаправление пользователя на другую страницу или представление
+                return RedirectToAction("Index", "Mandarin");
+            }
+            return View(bid);
 
         }
-        public IActionResult ViewBids()
+        public IActionResult ViewBids(int mandarinId)
         {
             var bids = _context.Bids.Where(b => b.MandarinId == mandarinId).ToList();
             return View(bids);
