@@ -1,8 +1,11 @@
 ﻿using BidMandarin.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BidMandarin.Controllers
 {
+
+    [Authorize]
     public class BidController : Controller
     { 
        private readonly ApplicationDbContext _context;
@@ -23,7 +26,7 @@ namespace BidMandarin.Controllers
                 _context.Bids.Add(bid);
                 _context.SaveChanges();
 
-                // Перенаправление пользователя на другую страницу или представление
+                // Перенаправление пользователя на страницу с мандаринками
                 return RedirectToAction("Index", "Mandarin");
             }
             return View(bid);
