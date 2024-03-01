@@ -1,3 +1,5 @@
+using BidMandarin.BackroundServices;
+using BidMandarin.Methods;
 using BidMandarin.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection"))); 
+builder.Services.AddSingleton<IHostedService, DailyCleanupService>(); 
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
+
 
 
 
